@@ -1,1 +1,12 @@
 LarsCrawlerDjango/settings.py
+.idea
+.idea/.gitignore
+.idea/LarsCrawlerDjango.iml
+.idea/dataSources.xml
+.idea/dataSources/
+.idea/inspectionProfiles/
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+LarsCrawlerDjango/__pycache__/
+__pycache__/
