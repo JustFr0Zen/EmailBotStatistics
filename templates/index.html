@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EmailBot Statistics</title>
+    <meta name="description" content="Statistics about the Discord/EmailBot">
+    <meta name="keywords" content="EmailBot Discord Lars Kaesberg Statistics">
+    <meta name="author" content="Sebastian K.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+    <link rel="icon" href="https://raw.githubusercontent.com/lkaesberg/EmailBot/main/images/emailbot.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@^3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <img style="width: 40px; margin: 0 20px 0 20px" class="h-auto"
+             src="https://raw.githubusercontent.com/lkaesberg/EmailBot/main/images/emailbot.png" alt="Logo"/>
+        <a class="navbar-brand" href="#">EmailBot Statistics</a>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <div class="navbar-nav me-auto"></div>
+            <div class="d-flex">
+                Made by Sebastian K.
+            </div>
+        </div>
+    </div>
+</nav>
+<main class="d-flex">
+    <div style="width: 80%" class="m-auto">
+        <div class="w-100 d-flex justify-content-between align-content-center mt-3">
+            <h2>Mails/day</h2>
+            <div class="d-flex flex-row-reverse gap-1">
+                <button onclick="setTimeInterval(undefined)" type="button" class="btn btn-info"
+                        style="height: min-content">All time
+                </button>
+                <button onclick="setTimeInterval(31)" type="button" class="btn btn-info"
+                        style="height: min-content">
+                    31d
+                </button>
+                <button onclick="setTimeInterval(7)" type="button" class="btn btn-info"
+                        style="height: min-content">7d
+                </button>
+                <button onclick="setTimeInterval(1)" type="button" class="btn btn-info"
+                        style="height: min-content">
+                    24h
+                </button>
+            </div>
+        </div>
+        <div style="width: 100%; height: 25vh;">
+            <canvas id="mails-day-chart"></canvas>
+        </div>
+        <h2 style="margin-top: 3rem">Server Count</h2>
+        <div style="width: 100%; height: 25vh;">
+            <canvas id="server-count-chart"></canvas>
+        </div>
+        <h2 style="margin-top: 3rem">Total Mails</h2>
+        <div style="width: 100%; height: 25vh;">
+            <canvas id="total-mails-chart"></canvas>
+        </div>
+    </div>
+</main>
+
+<script>
+    const statistics = {{ statistics|safe }};
+
+    const mailsPerDayChart = new Chart(document.getElementById("mails-day-chart"), {
+        type: 'line',
+        data: {
+            datasets: [
+                {
+                    label: "Mails today",
+                    borderColor: "rgb(234,73,73)",
+                    strokeColor: "rgb(234,73,73)",
+                    lineColor: "rgb(234,73,73)",
+                    backgroundColor: "rgb(234,73,73)",
+                    borderWidth: 1,
+                    pointRadius: 1.5,
+                    data: (statistics || []).map(([date, mails_today, _, __]) => {
+                        return {
+                            'x': moment(date).format("YYYY-MM-DD HH:mm:ss"),
+                            'y': mails_today
+                        }
+                    })
+
+                },
+            ]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month'
+                    },
+                    min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
+                }
+            },
+            maintainAspectRatio: false
+        }
+    });
+
+    const serverCountChart = new Chart(document.getElementById("server-count-chart"), {
+        type: 'line',
+        data: {
+            datasets: [
+                {
+                    label: "Server Count",
+                    pointRadius: 1.5,
+                    borderColor: "rgba(220,220,220,1)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    lineColor: "rgba(220,220,220,1)",
+                    backgroundColor: "rgba(220,220,220,1)",
+                    borderWidth: 1,
+                    data: (statistics || []).map(([date, _, __, server_count]) => {
+                        return {
+                            'x': moment(date).format("YYYY-MM-DD HH:mm:ss"),
+                            'y': server_count
+                        }
+                    })
+
+                },
+            ]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month'
+                    },
+                    min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
+                }
+            },
+            maintainAspectRatio: false
+        }
+    });
+
+    const totalMailsChart = new Chart(document.getElementById("total-mails-chart"), {
+        type: 'line',
+        data: {
+            datasets: [
+                {
+                    label: "Mails total",
+                    borderColor: "rgb(33,245,15)",
+                    strokeColor: "rgb(33,245,15)",
+                    lineColor: "rgb(33,245,15)",
+                    backgroundColor: "rgb(33,245,15)",
+                    borderWidth: 1,
+                    pointRadius: 1.5,
+                    data: (statistics || []).map(([date, _, mails_total, __]) => {
+                        return {
+                            'x': moment(date).format("YYYY-MM-DD HH:mm:ss"),
+                            'y': mails_total
+                        }
+                    })
+
+                },
+            ]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month'
+                    },
+                    min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
+                }
+            },
+            maintainAspectRatio: false
+        }
+    });
+
+    function setTimeInterval(days) {
+        [mailsPerDayChart, totalMailsChart, serverCountChart].forEach(chart => {
+            if (!days) {
+                chart.options.scales.x.min = undefined;
+            } else {
+                chart.options.scales.x.min = moment().subtract(days, "days").format("YYYY-MM-DD HH:mm:ss");
+            }
+
+            chart.update();
+        });
+    }
+</script>
+</body>
+</html>
