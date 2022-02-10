@@ -1,6 +1,7 @@
 class Statistics {
     constructor(statistics) {
         this.statistics = statistics;
+        this.load();
     }
 
     load() {
@@ -155,7 +156,7 @@ class Statistics {
         });
     }
 
-    setTimeInterval(days) {
+    setTimeInterval = (days) => {
         [this.mailsPerHourChart, this.totalMailsChart, this.serverCountChart].forEach(chart => {
             chart.options.scales.x.time.unit = this.getTimeUnit(days);
 
