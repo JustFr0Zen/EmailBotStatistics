@@ -65,156 +65,20 @@
     </div>
 </main>
 
+<footer class="mt-4 d-flex justify-content-center bg-dark">
+    <a class="gap-2 d-flex align-items-center text-decoration-none pt-2 pb-2" href="https://github.com/JustFr0Zen/EmailBotStatistics">
+        <img class="gap-2" src="/static/Mark.png" alt="Github">
+        <p class="gap-2 p-0 m-0">Star this project</p>
+    </a>
+</footer>
+
+<script src="/static/Statistics.js"></script>
 <script>
-    const statistics = {{ statistics|safe }};
+    const statisticData = {{ statistics|safe }};
+    const statistic = new Statistics(statisticData || []);
 
-    const mailPerHourData = [];
-
-    (statistics || []).forEach(([date, mails_hour, _, __], index) => {
-        if (index === (statistics || []).length - 1)
-            return;
-
-        [date_next, mails_hour_next] = statistics[index + 1];
-
-        const diff = mails_hour_next - mails_hour;
-
-        if (diff < 0)
-            return;
-
-        mailPerHourData.push({
-            'x': moment(date).format("YYYY-MM-DD HH:mm:ss"),
-            'y': diff
-        });
-    })
-
-    const mailsPerHourChart = new Chart(document.getElementById("mails-hour-chart"), {
-        type: 'line',
-        data: {
-            datasets: [
-                {
-                    label: "Mails hour",
-                    borderColor: "rgb(234,73,73)",
-                    strokeColor: "rgb(234,73,73)",
-                    lineColor: "rgb(234,73,73)",
-                    backgroundColor: "rgb(234,73,73)",
-                    borderWidth: 1,
-                    pointRadius: 1.5,
-                    data: mailPerHourData
-                },
-            ]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                x: {
-                    type: 'time',
-                    time: {
-                        unit: 'month'
-                    },
-                    min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
-                }
-            },
-            maintainAspectRatio: false
-        }
-    });
-
-    const serverCountChart = new Chart(document.getElementById("server-count-chart"), {
-        type: 'line',
-        data: {
-            datasets: [
-                {
-                    label: "Server Count",
-                    pointRadius: 1.5,
-                    borderColor: "rgba(220,220,220,1)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    lineColor: "rgba(220,220,220,1)",
-                    backgroundColor: "rgba(220,220,220,1)",
-                    borderWidth: 1,
-                    data: (statistics || []).map(([date, _, __, server_count]) => {
-                        return {
-                            'x': moment(date).format("YYYY-MM-DD HH:mm:ss"),
-                            'y': server_count
-                        }
-                    })
-
-                },
-            ]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                x: {
-                    type: 'time',
-                    time: {
-                        unit: 'month'
-                    },
-                    min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
-                }
-            },
-            maintainAspectRatio: false
-        }
-    });
-
-    const totalMailsChart = new Chart(document.getElementById("total-mails-chart"), {
-        type: 'line',
-        data: {
-            datasets: [
-                {
-                    label: "Mails total",
-                    borderColor: "rgb(33,245,15)",
-                    strokeColor: "rgb(33,245,15)",
-                    lineColor: "rgb(33,245,15)",
-                    backgroundColor: "rgb(33,245,15)",
-                    borderWidth: 1,
-                    pointRadius: 1.5,
-                    data: (statistics || []).map(([date, _, mails_total, __]) => {
-                        return {
-                            'x': moment(date).format("YYYY-MM-DD HH:mm:ss"),
-                            'y': mails_total
-                        }
-                    })
-
-                },
-            ]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                x: {
-                    type: 'time',
-                    time: {
-                        unit: 'month'
-                    },
-                    min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
-                }
-            },
-            maintainAspectRatio: false
-        }
-    });
-
-    function setTimeInterval(days) {
-        [mailsPerHourChart, totalMailsChart, serverCountChart].forEach(chart => {
-            if (!days) {
-                chart.options.scales.x.min = undefined;
-            } else {
-                chart.options.scales.x.min = moment().subtract(days, "days").format("YYYY-MM-DD HH:mm:ss");
-            }
-
-            chart.update();
-        });
-    }
+    statistic.load();
+    const setTimeInterval = statistic.setTimeInterval;
 </script>
 </body>
 </html>
