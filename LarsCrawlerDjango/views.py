@@ -21,6 +21,7 @@ def get_index(request, *args, **kwargs):
     last_six_month = datetime.today() - timedelta(31 * 6)
     statistics = json.dumps(list(StatisticModel.objects
                                  .filter(crawl_time__gte=last_six_month)
+                                 .order_by("crawl_time")
                                  .values_list(named=True)), cls=DjangoJSONEncoder)
 
     return render(request, "index.html", {"statistics": statistics})
