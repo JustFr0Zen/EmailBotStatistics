@@ -32,7 +32,7 @@ class Statistics {
 
             const diff = mails_hour_next - mails_hour;
 
-            if (diff > 0)
+            if (diff >= 0)
                 return;
 
             mailPerDay.push({
