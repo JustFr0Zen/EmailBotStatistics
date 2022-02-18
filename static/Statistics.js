@@ -215,7 +215,7 @@ class Statistics {
     }
 
     setTimeInterval = (days) => {
-        [this.mailsPerHourChart, this.totalMailsChart, this.serverCountChart].forEach(chart => {
+        [this.mailsPerHourChart, this.totalMailsChart, this.serverCountChart, this.mailsPerDayChart].forEach(chart => {
             chart.options.scales.x.time.unit = this.getTimeUnit(days);
 
             if (!days) {
