@@ -40,7 +40,7 @@ class Statistics {
                 'y': mails_hour
             });
         })
-        const [currentDate, currentMaxMails] = this.statistics[-1];
+        const [currentDate, currentMaxMails] = this.statistics[this.statistics.length - 1];
         mailPerDay.push({
                 'x': moment(currentDate).format("YYYY-MM-DD"),
                 'y': currentMaxMails
