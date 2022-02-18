@@ -53,7 +53,7 @@ class Statistics {
                         backgroundColor: "rgb(234,73,73)",
                         borderWidth: 1,
                         pointRadius: 1.5,
-                        data: mailPerHourData
+                        data: mailPerDay
                     },
                 ]
             },
