@@ -42,7 +42,7 @@ class Statistics {
         })
         const [currentDate, currentMaxMails] = this.statistics[this.statistics.length - 1];
         mailPerDay.push({
-                'x': moment(currentDate).format("YYYY-MM-DD"),
+                'x': moment(currentDate).format("YYYY-MM-DD HH:mm:ss"),
                 'y': currentMaxMails
             });
 
