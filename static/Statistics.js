@@ -22,6 +22,24 @@ class Statistics {
                 'y': diff
             });
         })
+        
+        const mailPerDay = [];
+        this.statistics.forEach(([_, mails_hour, __, ___], index) => {
+            if (index === (this.statistics || []).length - 1)
+                return;
+
+            const [date_next, mails_hour_next] = this.statistics[index + 1];
+
+            const diff = mails_hour_next - mails_hour;
+
+            if (diff > 0)
+                return;
+
+            mailPerDay.push({
+                'x': moment(date_next).format("YYYY-MM-DD"),
+                'y': mails_hour
+            });
+        })
 
         this.mailsPerHourChart = new Chart(document.getElementById("mails-hour-chart"), {
             type: 'line',
@@ -36,6 +54,46 @@ class Statistics {
                         borderWidth: 1,
                         pointRadius: 1.5,
                         data: mailPerHourData
+                    },
+                ]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day',
+                            displayFormats: {
+                                day: 'DD.MM.YYYY',
+                                hour: 'HH:mm',
+                            },
+                            tooltipFormat: "DD.MM.YYYY HH:mm"
+                        },
+                        min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
+                    }
+                },
+                maintainAspectRatio: false
+            }
+        });
+        
+        this.mailsPerDayChart = new Chart(document.getElementById("mails-day-chart"), {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        label: "Mails day",
+                        borderColor: "rgb(234,73,73)",
+                        strokeColor: "rgb(234,73,73)",
+                        lineColor: "rgb(234,73,73)",
+                        backgroundColor: "rgb(234,73,73)",
+                        borderWidth: 1,
+                        pointRadius: 1.5,
+                        data: mailPerDay
                     },
                 ]
             },
