@@ -24,11 +24,11 @@ class Statistics {
         })
         
         const mailPerDay = [];
-        this.statistics.forEach(([_, mails_hour, __, ___], index) => {
+        this.statistics.forEach(([date, mails_hour, __, ___], index) => {
             if (index === (this.statistics || []).length - 1)
                 return;
 
-            const [date_next, mails_hour_next] = this.statistics[index + 1];
+            const [_, mails_hour_next] = this.statistics[index + 1];
 
             const diff = mails_hour_next - mails_hour;
 
@@ -36,7 +36,7 @@ class Statistics {
                 return;
 
             mailPerDay.push({
-                'x': moment(date_next).format("YYYY-MM-DD"),
+                'x': moment(date).format("YYYY-MM-DD"),
                 'y': mails_hour
             });
         })
@@ -53,7 +53,7 @@ class Statistics {
                         backgroundColor: "rgb(234,73,73)",
                         borderWidth: 1,
                         pointRadius: 1.5,
-                        data: mailPerDay
+                        data: mailPerHourData
                     },
                 ]
             },
