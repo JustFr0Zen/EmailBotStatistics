@@ -80,7 +80,12 @@ class Statistics {
                             tooltipFormat: "DD.MM.YYYY HH:mm"
                         },
                         min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
-                    }
+                    },
+                    y: {
+                        ticks: {
+                             precision: 0
+                             }
+                        }
                 },
                 maintainAspectRatio: false
             }
@@ -120,7 +125,12 @@ class Statistics {
                             tooltipFormat: "DD.MM.YYYY HH:mm"
                         },
                         min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
-                    }
+                    },
+                    y: {
+        ticks: {
+            precision: 0
+        }
+    }
                 },
                 maintainAspectRatio: false
             }
@@ -166,7 +176,12 @@ class Statistics {
                             tooltipFormat: "DD.MM.YYYY HH:mm"
                         },
                         min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
-                    }
+                    },
+                    y: {
+        ticks: {
+            precision: 0
+        }
+    }
                 },
                 maintainAspectRatio: false
             }
@@ -212,7 +227,12 @@ class Statistics {
                             tooltipFormat: "DD.MM.YYYY HH:mm"
                         },
                         min: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss")
-                    }
+                    },
+                    y: {
+        ticks: {
+            precision: 0
+        }
+    }
                 },
                 maintainAspectRatio: false
             }
