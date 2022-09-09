@@ -58,7 +58,7 @@ class Statistics {
                         backgroundColor: "rgb(234,73,73)",
                         borderWidth: 1,
                         pointRadius: 1.5,
-                        data: mailPerHourData
+                        data: mailPerHourData.filter((_, i, array) => i%Math.ceil(array.length / 200) == 0 || i == array.length -1)
                     },
                 ]
             },
@@ -103,7 +103,7 @@ class Statistics {
                         backgroundColor: "rgb(234,73,73)",
                         borderWidth: 1,
                         pointRadius: 1.5,
-                        data: mailPerDay
+                        data: mailPerDay.filter((_, i, array) => i%Math.ceil(array.length / 200) == 0 || i == array.length -1)
                     },
                 ]
             },
@@ -153,7 +153,7 @@ class Statistics {
                                 'x': moment(date).format("YYYY-MM-DD HH:mm:ss"),
                                 'y': server_count
                             }
-                        })
+                        }).filter((_, i, array) => i%Math.ceil(array.length / 200) == 0 || i == array.length -1)
 
                     },
                 ]
