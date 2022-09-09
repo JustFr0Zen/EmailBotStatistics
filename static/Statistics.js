@@ -64,11 +64,6 @@ class Statistics {
             },
             options: {
                 plugins: {
-                    decimation: {
-                        enabled: true,
-                        algorithm: 'lttb',
-                        samples: 100
-                            },
                     legend: {
                         display: false
                     }
