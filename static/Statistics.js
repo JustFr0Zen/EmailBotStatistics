@@ -58,12 +58,19 @@ class Statistics {
                         backgroundColor: "rgb(234,73,73)",
                         borderWidth: 1,
                         pointRadius: 1.5,
-                        data: mailPerHourData.filter((_, i, array) => i%Math.ceil(array.length / 200) == 0 || i == array.length -1)
+                        data: mailPerHourData
                     },
                 ]
             },
             options: {
+                parsing: false,
                 plugins: {
+                    decimation: {
+                    enabled: true,
+                    algorithm: 'lttb',
+                    samples: 20,
+                    threshold: 20
+                },
                     legend: {
                         display: false
                     }
@@ -107,8 +114,15 @@ class Statistics {
                     },
                 ]
             },
-            options: {
+           options: {
+                parsing: false,
                 plugins: {
+                    decimation: {
+                    enabled: true,
+                    algorithm: 'lttb',
+                    samples: 20,
+                    threshold: 20
+                },
                     legend: {
                         display: false
                     }
@@ -159,7 +173,14 @@ class Statistics {
                 ]
             },
             options: {
+                parsing: false,
                 plugins: {
+                    decimation: {
+                    enabled: true,
+                    algorithm: 'lttb',
+                    samples: 20,
+                    threshold: 20
+                },
                     legend: {
                         display: false
                     }
