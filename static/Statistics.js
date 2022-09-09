@@ -63,14 +63,7 @@ class Statistics {
                 ]
             },
             options: {
-                parsing: false,
                 plugins: {
-                    decimation: {
-                    enabled: true,
-                    algorithm: 'lttb',
-                    samples: 20,
-                    threshold: 20
-                },
                     legend: {
                         display: false
                     }
@@ -115,14 +108,7 @@ class Statistics {
                 ]
             },
            options: {
-                parsing: false,
                 plugins: {
-                    decimation: {
-                    enabled: true,
-                    algorithm: 'lttb',
-                    samples: 20,
-                    threshold: 20
-                },
                     legend: {
                         display: false
                     }
@@ -173,14 +159,7 @@ class Statistics {
                 ]
             },
             options: {
-                parsing: false,
                 plugins: {
-                    decimation: {
-                    enabled: true,
-                    algorithm: 'lttb',
-                    samples: 20,
-                    threshold: 20
-                },
                     legend: {
                         display: false
                     }
